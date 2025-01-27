@@ -17,8 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from cafetasks.users.views import UserLoginView
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("items/", include("cafetasks.items.urls")),
+    path("users/", include("cafetasks.users.urls")),
+    path("login/", UserLoginView.as_view(), name="user_login"),
+    path("logout/", LogoutView.as_view(), name="user_logout"),
 ]
