@@ -17,10 +17,10 @@ class ItemListView(SuccessMessageMixin, ListView):
         context["title"] = "Меню"
         context["tables"] = self.tables
         context["list_name"] = "Items"
-        context["url_name_change"] = "update_item"
-        context["url_name_delete"] = "delete_item"
+        context["url_name_change"] = "item_update"
+        context["url_name_delete"] = "item_delete"
         context["button_value"] = "Добавить в меню"
-        context["button_url"] = reverse_lazy("create_item")
+        context["button_url"] = reverse_lazy("item_create")
         return context
 
 
@@ -28,7 +28,7 @@ class ItemCreateView(SuccessMessageMixin, CreateView):
     model = Item
     form_class = ItemForm
     template_name = "forms.html"
-    success_url = reverse_lazy("items")
+    success_url = reverse_lazy("item_list")
     success_message = "Объект меню создан"
     extra_context = {"title": "Добавление в меню", "button": "Добавить"}
 
@@ -37,7 +37,7 @@ class ItemUpdadeView(SuccessMessageMixin, UpdateView):
     model = Item
     form_class = ItemForm
     template_name = "forms.html"
-    success_url = reverse_lazy("items")
+    success_url = reverse_lazy("item_list")
     success_message = "Объект меню успешно изменен"
     extra_context = {
         "title": "Изменение объекта меню",
@@ -48,7 +48,7 @@ class ItemUpdadeView(SuccessMessageMixin, UpdateView):
 class ItemDeleteView(SuccessMessageMixin, DeleteView):
     model = Item
     template_name = "forms.html"
-    success_url = reverse_lazy("items")
+    success_url = reverse_lazy("item_list")
     success_message = "Объект меню успешно удален"
 
     def get_context_data(self, **kwargs):
