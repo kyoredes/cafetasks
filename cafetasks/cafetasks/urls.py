@@ -19,9 +19,11 @@ from django.contrib import admin
 from django.urls import path, include
 from cafetasks.users.views import UserLoginView
 from django.contrib.auth.views import LogoutView
+from cafetasks.views import index
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", index, name="index"),
     path("items/", include("cafetasks.items.urls")),
     path("users/", include("cafetasks.users.urls")),
     path("login/", UserLoginView.as_view(), name="user_login"),

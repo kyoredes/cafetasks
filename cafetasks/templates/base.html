@@ -23,11 +23,12 @@
         <header
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             <div>
-                <i class="bi bi-cup-hot-fill" style="font-size: 32px;"></i>
+                <a href="{% url 'index' %}" class="text-reset"><i class="bi bi-cup-hot-fill"
+                        style="font-size: 32px;"></i></a>
             </div>
             <div class="j-flex justify-content-center">
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 link-secondary" href="{% url 'index' %}">Главная страница</a>
+                    <li><a href="{% url 'index' %}" class="nav-link px-2 link-secondary">Главная страница</a>
                     </li>
                     <li><a href="#" class="nav-link px-2">Заказы</a></li>
                     <li><a href="{% url 'item_list' %}" class="nav-link px-2">Меню</a></li>
@@ -39,11 +40,17 @@
                 <a type="button" class="btn btn-outline-primary me-2" href="{% url 'user_login' %}">Войти</a>
                 <a type="button" class="btn btn-primary" href="{% url 'user_signup' %}">Зарегистрироваться</a>
             </div>
+            {% else %}
+            <div class="text-end">
+                <form method="POST" action="{% url 'user_logout' %}"> {% csrf_token %} <button type="submit"
+                        class="btn btn-outline-primary me-2">Выйти</button>
+                </form>
+            </div>
             {% endif %}
         </header>
     </div>
 
-    <main class="container mb-auto">
+    <main class="container mb-auto mt-auto">
         {% if messages %}
         {% for message in messages %}
         <div {% if message.tags %} class="alert {{ message.tags }} alert-dismissible fade show" {% endif %}
