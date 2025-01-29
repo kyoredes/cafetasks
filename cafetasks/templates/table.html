@@ -10,9 +10,9 @@
 
 {% block content %}
 <div class="container wrapper flex-grow-1">
-    {% if button_value %}
+    {% if button_value_create %}
     <div class="container wrapper flex-grow-1 d-flex mb-3 justify-content-start align-items-center">
-        <a class="btn btn-primary" href="{{ button_url }}" role="button">{{ button_value }}</a>
+        <a class="btn btn-primary" href="{% url url_name_create }" role="button">{{ button_value_create }}</a>
     </div>
     {% endif %}
 
@@ -35,8 +35,16 @@
                 <td>{{ item.full_name }}</td>
 
                 {% elif list_name == 'Orders' %}
-                <td>{{ item.cost_sum }}</td>
-                <td>{{ item.status }}</td>
+                <td>{{ item.table_number }}</td>
+                <td>
+                    {% for item_menu in item.items.all|slice:"2" %}
+                    <ol>{{ item_menu.name }}</ol>
+                    {% endfor %}{% if item.items.all.count > 2 %} ...
+                    {% endif %}
+                </td>
+                <td>{{ item.total_cost }}</td>
+                <td>{{ item.executor }}</td>
+                <td>{{ item.get_status_display }}</td>
 
                 {% elif list_name == 'Items' %}
                 <td>{{ item.name }}</td>
@@ -46,8 +54,17 @@
                 {% endif %}
 
                 <td>
-                    <a href="{% url url_name_change pk=item.id %}">Изменить</a>
-                    <a href="{% url url_name_delete pk=item.id %}">Удалить</a>
+                    {% if url_name_detail %}
+                    <ol><a href="{% url url_name_detail pk=item.id %}">Просмотреть</a></ol>
+                    {% endif %}
+
+                    {% if url_name_update %}
+                    <ol><a href="{% url url_name_update pk=item.id %}">Изменить</a></ol>
+                    {% endif %}
+
+                    {% if url_name_delete %}
+                    <ol><a href="{% url url_name_delete pk=item.id %}">Удалить</a></ol>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
