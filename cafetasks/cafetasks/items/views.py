@@ -1,8 +1,9 @@
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from cafetasks.items.models import Item
-from cafetasks.items.forms import ItemForm
+from cafetasks.items.forms import ItemCreateForm
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class ItemListView(SuccessMessageMixin, ListView):
@@ -17,26 +18,26 @@ class ItemListView(SuccessMessageMixin, ListView):
         context["title"] = "Меню"
         context["tables"] = self.tables
         context["list_name"] = "Items"
-        context["url_name_change"] = "item_update"
+        context["url_name_update"] = "item_update"
         context["url_name_delete"] = "item_delete"
-        context["button_value"] = "Добавить в меню"
-        context["button_url"] = reverse_lazy("item_create")
+        context["button_value_create"] = "Добавить в меню"
+        context["button_url_create"] = "item_create"
         return context
 
 
-class ItemCreateView(SuccessMessageMixin, CreateView):
+class ItemCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Item
-    form_class = ItemForm
-    template_name = "forms.html"
+    form_class = ItemCreateForm
+    template_name = "form.html"
     success_url = reverse_lazy("item_list")
     success_message = "Объект меню создан"
     extra_context = {"title": "Добавление в меню", "button": "Добавить"}
 
 
-class ItemUpdadeView(SuccessMessageMixin, UpdateView):
+class ItemUpdadeView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Item
-    form_class = ItemForm
-    template_name = "forms.html"
+    form_class = ItemCreateForm
+    template_name = "form.html"
     success_url = reverse_lazy("item_list")
     success_message = "Объект меню успешно изменен"
     extra_context = {
@@ -45,9 +46,9 @@ class ItemUpdadeView(SuccessMessageMixin, UpdateView):
     }
 
 
-class ItemDeleteView(SuccessMessageMixin, DeleteView):
+class ItemDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Item
-    template_name = "forms.html"
+    template_name = "form.html"
     success_url = reverse_lazy("item_list")
     success_message = "Объект меню успешно удален"
 

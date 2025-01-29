@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block main_text %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <form method="post">
+
+        {% csrf_token %}
+
+        {% if value_to_delete %}
+        <h2>Вы уверены, что хотите удалить {{ name }} {{ value_to_delete }}?</h2>
+        {% endif %}
+
+        {% for field in form %}
+        <div class="fieldWrapper">
+
+            {% for error in field.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+
+            {{ field|as_crispy_field }}
+        </div>
+        {% endfor %}
+
+
+        <div class="container wrapper flex-grow-1 d-flex mb-3 mt-4 justify-content-center align-items-center">
+            <input role="button" class="btn btn-primary mx-4" type="submit" value="{{ button }}">
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 from cafetasks.items.models import Item
 
 
-class ItemForm(forms.ModelForm):
+class ItemCreateForm(forms.ModelForm):
     name = forms.CharField(label="Название")
     description = forms.CharField(label="Описание", widget=forms.Textarea())
     cost = forms.IntegerField(label="Цена")
