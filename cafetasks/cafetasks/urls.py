@@ -26,6 +26,6 @@ urlpatterns = [
     path("", index, name="index"),
     path("items/", include("cafetasks.items.urls")),
     path("users/", include("cafetasks.users.urls")),
-    path("login/", UserLoginView.as_view(), name="user_login"),
-    path("logout/", LogoutView.as_view(), name="user_logout"),
+    path("login/", UserLoginView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
 ]
