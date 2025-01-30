@@ -24,6 +24,7 @@ class Order(models.Model):
         get_user_model(),
         on_delete=models.PROTECT,
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     @property
     def total_cost(self):

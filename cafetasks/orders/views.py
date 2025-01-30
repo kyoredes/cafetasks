@@ -4,12 +4,26 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
     DetailView,
+    TemplateView,
 )
 from cafetasks.orders.forms import OrdersCreateForm
 from cafetasks.orders.models import Order
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from cafetasks.utils.calculate_data import get_orders_count, get_daily_revenue
+
+
+class OrderRevenueView(TemplateView):
+    template_name = "revenue.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Выручка за смену"
+        context["orders_count"] = get_orders_count()
+        context["revenue"] = get_daily_revenue()
+
+        return context
 
 
 class OrderListView(ListView):
