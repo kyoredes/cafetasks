@@ -20,8 +20,9 @@ class ItemListView(SuccessMessageMixin, ListView):
         context["list_name"] = "Items"
         context["url_name_update"] = "item_update"
         context["url_name_delete"] = "item_delete"
+        context["url_name_create"] = "item_create"
         context["button_value_create"] = "Добавить в меню"
-        context["button_url_create"] = "item_create"
+
         return context
 
 
