@@ -15,7 +15,6 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        ul,
         ol {
             list-style-type: none;
             padding: 0;
@@ -33,13 +32,14 @@
                         style="font-size: 32px;"></i></a>
             </div>
             <div class="j-flex justify-content-center">
-                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <ol class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{% url 'index' %}" class="nav-link px-2 link-secondary">Главная страница</a>
                     </li>
                     <li><a href="{% url 'order_list' %}" class="nav-link px-2">Заказы</a></li>
                     <li><a href="{% url 'item_list' %}" class="nav-link px-2">Меню</a></li>
+                    <li><a href="{% url 'status_list' %}" class="nav-link px-2">Статусы</a></li>
                     <li><a href="{% url 'revenue' %}" class="nav-link px-2">Выручка</a></li>
-                </ul>
+                </ol>
             </div>
             {% if not user.is_authenticated %}
             <div class="text-end">

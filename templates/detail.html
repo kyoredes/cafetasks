@@ -26,8 +26,10 @@
 
         </div>
         <p>
+            {% if url_name_update and url_name_delete %}
             <a class="btn btn-primary my-2 mx-1" href="{% url url_name_update pk=obj.id %}" role="button">Изменить</a>
             <a class="btn btn-primary my-2 mx-1" href="{% url url_name_delete pk=obj.id %}" role="button">Удалить</a>
+            {% endif %}
         </p>
 
 

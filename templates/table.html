@@ -44,12 +44,17 @@
                 </td>
                 <td>{{ item.total_cost }}</td>
                 <td>{{ item.executor }}</td>
-                <td>{{ item.get_status_display }}</td>
+                <td>{{ item.status }}</td>
 
                 {% elif list_name == 'Items' %}
                 <td>{{ item.name }}</td>
                 <td>{{ item.description }}</td>
                 <td>{{ item.cost }}</td>
+
+                {% elif list_name == 'Statuses' %}
+                <td>{{ item.name }}</td>
+                <td>{{ item.user }}</td>
+                <td>{{ item.created_at|date:"d.m.Y" }}</td>
 
                 {% endif %}
 
