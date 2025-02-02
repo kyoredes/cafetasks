@@ -30,4 +30,5 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path("orders/", include("cafetasks.orders.urls")),
     path("statuses/", include("cafetasks.statuses.urls")),
+    path("api/", include("cafetasks.api.urls")),
 ]

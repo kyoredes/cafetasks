@@ -51,7 +51,10 @@ INSTALLED_APPS = [
     "cafetasks.items",
     "cafetasks.orders",
     "cafetasks.statuses",
+    "cafetasks.api",
     "django_bootstrap5",
+    "rest_framework",
+    "rest_framework.authtoken",
     "django_elasticsearch_dsl",
     "elasticsearch_dsl",
 ]
@@ -164,6 +167,26 @@ ELASTICSEARCH_DSL = {
     },
 }
 
-CELERY_BROCKER_URL = "redis://redis:6379/0"
-CELERY_ACCEPT_CONTENT = ["json"]
-CELERY_TASK_SERIALIZER = "json"
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",  # noqa: E501
+    "PAGE_SIZE": 10,
+}
+
+DJOSER = {
+    "LOGIN_FIELD": "username",
+    "USER_ID_FIELD": "id",
+    "USER_CREATE_PASSWORD_RETYPE": False,
+    "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": False,
+    "SERIALIZERS": {
+        "user_create": "cafetasks.api.serializers.CustomUserCreateSerializer",
+        "user": "cafetasks.api.serializers.UserSerializer",
+    },
+}
