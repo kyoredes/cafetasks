@@ -10,3 +10,5 @@ migrate:
 	uv run python manage.py migrate
 sh:
 	uv run python manage.py shell
+urls:
+	uv run python manage.py show_urls
