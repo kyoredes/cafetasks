@@ -1,0 +1,12 @@
+{% extend 'base.html' %}
+
+{% block title %}
+Ошибка
+{% endblock %}
+
+{% block content %}
+Что-то пошло не так. Пожалуйста, попробуйте позже.
+<p class="lead">
+    <a href="{% url 'order_list' %}" class="btn btn-lg btn-light fw-bold border-white bg-white">К заказам</a>
+</p>
+{% endblock %}
