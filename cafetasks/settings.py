@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "cafetasks.items",
     "cafetasks.orders",
+    "cafetasks.statuses",
     "django_bootstrap5",
 ]
 

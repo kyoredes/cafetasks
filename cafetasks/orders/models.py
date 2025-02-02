@@ -2,12 +2,7 @@ from django.db import models
 from cafetasks.items.models import Item
 from django.contrib.auth import get_user_model
 from django.db.models import Sum
-
-
-class Status(models.TextChoices):
-    PENDING = "PENDING", "В ожидании"
-    COMPLETE = "COMPLETE", "Готово"
-    PAID = "PAID", "Оплачено"
+from cafetasks.statuses.models import Status
 
 
 class Order(models.Model):
@@ -16,9 +11,9 @@ class Order(models.Model):
         Item,
         related_name="orders",
     )
-    status = models.CharField(
-        choices=Status.choices,
-        default=Status.PENDING,
+    status = models.ForeignKey(
+        Status,
+        on_delete=models.PROTECT,
     )
     executor = models.ForeignKey(
         get_user_model(),
