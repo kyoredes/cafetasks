@@ -12,6 +12,34 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cafetasks.utils.calculate_data import get_orders_count, get_daily_revenue
+from cafetasks.orders.documents import OrderDocument
+from django.shortcuts import render
+
+
+class SearchResultsList(ListView):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q")
+        if query:
+            if query.isdigit():
+                search = (
+                    OrderDocument().search().query("match", table_number=int(query))
+                )
+            else:
+                search = (
+                    OrderDocument()
+                    .search()
+                    .query(
+                        "nested", path="status", query={"match": {"status.name": query}}
+                    )
+                )
+
+            results = search.execute()
+            orders_result = [
+                {"id": hit.id, "table_number": hit.table_number, "status": hit.status}
+                for hit in results
+            ]
+            return render(request, "search.html", context={"results": orders_result})
+        return render(request, "search.html")
 
 
 class OrderRevenueView(TemplateView):
@@ -29,7 +57,6 @@ class OrderRevenueView(TemplateView):
 class OrderListView(ListView):
     template_name = "table.html"
     model = Order
-    paginate_by = 10
     tables = [
         "ID",
         "Номер стола",

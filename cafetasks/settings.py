@@ -28,8 +28,14 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
+SEARCH_ENGINE = "elasticsearch"
+ELASTIC_PASSWORD = os.getenv("ELASTIC_PASSWORD")
+
+
+ROOT_URLCONF = "cafetasks.urls"
+DJANGO_SETTINGS_MODULE = "cafetasks.settings"
 
 # Application definition
 
@@ -46,6 +52,8 @@ INSTALLED_APPS = [
     "cafetasks.orders",
     "cafetasks.statuses",
     "django_bootstrap5",
+    "django_elasticsearch_dsl",
+    "elasticsearch_dsl",
 ]
 
 MIDDLEWARE = [
@@ -93,7 +101,6 @@ DATABASES = {
         conn_health_checks=True,
     )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -149,3 +156,14 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
 LOGIN_URL = "login"
+ELASTICSEARCH_DSL = {
+    "default": {
+        "hosts": "http://127.0.0.1:9200",
+        # "http_auth": ("elastic", ELASTIC_PASSWORD),
+        # "ca_certs": "http_ca.crt",
+    },
+}
+
+CELERY_BROCKER_URL = "redis://redis:6379/0"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"

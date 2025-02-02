@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Поиск
+{% endblock %}
+{% block content %}
+<form action="{% url 'order_search' %}" method="get">
+    <input type="search" name="q" placeholder="Поиск по table_number или статусу заказа" class="form-control" />
+</form>
+<div class="container my-5 mr-5 ml-5">
+    <ul class="list-group">
+        {% for item in results %}
+        <li class="list-group-item">
+            <a href="{% url 'order_detail' pk=item.id %}">Заказ на столик {{ item.table_number }}.
+                Статус: {{ item.status.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
